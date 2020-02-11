@@ -47,7 +47,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
-add_subdirectory(Apps)
+add_subdirectory(apps)
 add_subdirectory(operations)
 
 enable_testing()

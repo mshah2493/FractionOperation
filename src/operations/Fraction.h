@@ -4,11 +4,32 @@
 #ifndef FRACTION_H
 #define FRACTION_H
 
+template <class T>
 class Fraction
 {
 	private:
-		long numerator, denominator;
+		T numerator, denominator;
 	
+		//************************************
+		// Method:    add - add two objects F1+F2
+		// FullName:  Fraction::add
+		// Access:    private 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		Fraction add(const Fraction &);
+
+		//************************************
+		// Method:    subtract - subtract two objects F1-F2
+		// FullName:  Fraction::subtract
+		// Access:    private 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		Fraction subtract(const Fraction &);
+
 		//************************************
 		// Method:    multiply - Multiply two objects F1*F2
 		// FullName:  Fraction::multiply
@@ -20,15 +41,25 @@ class Fraction
 		Fraction multiply(const Fraction &);
 
 		//************************************
+		// Method:    divide - divide two objects F1/F2
+		// FullName:  Fraction::divide
+		// Access:    private 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		Fraction divide(const Fraction &);
+
+		//************************************
 		// Method:    multiply - Multiply integer and an object 3 * F1 | F1 * 3
 		// FullName:  Fraction::multiply
 		// Access:    private 
 		// Returns:   Fraction
 		// Qualifier:
-		// Parameter: const int &
+		// Parameter: const T &
 		// Parameter: const Fraction &
 		//************************************
-		Fraction multiply(const int &, const Fraction &);
+		Fraction multiply(const T &, const Fraction &);
 		
 		//************************************
 		// Method:    simplify - To simplify fraction (2/4 = 1/2)
@@ -44,22 +75,22 @@ class Fraction
 		// Method:    fixSign - To fix sign of integer if negative (1/-2 = -1/2)
 		// FullName:  Fraction::fixSign 
 		// Access:    private 
-		// Returns:   int
+		// Returns:   T
 		// Qualifier:
 		// Parameter: Fraction & fraction
 		//************************************
-		int fixSign(Fraction &);
+		T fixSign(Fraction &);
 
 		//************************************
 		// Method:    gcd - To find greatest common divisor  (gcd(2/4) = 2)
 		// FullName:  Fraction::gcd
 		// Access:    private 
-		// Returns:   int
+		// Returns:   T
 		// Qualifier:
-		// Parameter: int
-		// Parameter: int
+		// Parameter: T
+		// Parameter: T
 		//************************************
-		int gcd(int, int);
+		T gcd(T, T);
 
 
 		//************************************
@@ -70,6 +101,16 @@ class Fraction
 		// Qualifier:
 		//************************************
 		bool isNumeratorZero();
+
+		//************************************
+		// Method:    isOperationOverflowed - Checks if an operation (addition/multiplication/subtraction/division) is overflowed. 
+		// FullName:  Fraction::isOperationOverflowed
+		// Access:    private 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: Fraction
+		//************************************
+		bool isOperationOverflowed(const Fraction &, T);
 
 	public:
 		
@@ -91,7 +132,7 @@ class Fraction
 		// Parameter: int _numerator Numerator in a fraction
 		// Parameter: int _denominator Denominator in a fraction 
 		//************************************
-		Fraction(int _numerator, int _denominator);
+		Fraction(T _numerator, T _denominator);
 
 		//************************************
 		// Method:    ~Fraction Destructor of Fraction
@@ -110,7 +151,7 @@ class Fraction
 		// Qualifier:
 		// Parameter: const int Numerator in a fraction
 		//************************************
-		void setnumerator(const int);
+		void setnumerator(const T);
 
 		//************************************
 		// Method:    getnumerator To get numerator
@@ -127,9 +168,9 @@ class Fraction
 		// Access:    public 
 		// Returns:   void
 		// Qualifier:
-		// Parameter: const int - Denominator to set in a fraction
+		// Parameter: const T - Denominator to set in a fraction
 		//************************************
-		void setdenominator(const int);
+		void setdenominator(const T);
 		
 		//************************************
 		// Method:    getdenominator  To get Denominator
@@ -139,6 +180,26 @@ class Fraction
 		// Qualifier: const
 		//************************************
 		long getdenominator() const;
+
+		//************************************
+		// Method:    operator+  To add two Fraction objects (F1 + F2)
+		// FullName:  Fraction::operator+
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction & Fraction object to add with
+		//************************************
+		Fraction operator+(const Fraction &);
+
+		//************************************
+		// Method:    operator-  To subtract two Fraction objects (F1 - F2)
+		// FullName:  Fraction::operator-
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction & Fraction
+		//************************************
+		Fraction operator-(const Fraction &);
 
 		//************************************
 		// Method:    operator*  To multiply two Fraction objects (F1 * F2)
@@ -151,6 +212,36 @@ class Fraction
 		Fraction operator*(const Fraction &);
 
 		//************************************
+		// Method:    operator/ To divide two Fraction objects (F1 / F2)
+		// FullName:  Fraction::operator/
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const Fraction & Fraction
+		//************************************
+		Fraction operator/(const Fraction &);
+
+		//************************************
+		// Method:    operator+ To add Fraction to Integer object (F1 + 3)
+		// FullName:  Fraction::operator+ 
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const int Integer number
+		//************************************
+		Fraction operator+(const T);
+
+		//************************************
+		// Method:    operator- To subtract Fraction to Integer object (F1 - 3)
+		// FullName:  Fraction::operator- 
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const int Integer number
+		//************************************
+		Fraction operator-(const T);
+
+		//************************************
 		// Method:    operator* To multiply Fraction to Integer object (F1 * 3)
 		// FullName:  Fraction::operator* 
 		// Access:    public 
@@ -158,18 +249,28 @@ class Fraction
 		// Qualifier:
 		// Parameter: const int Integer number to multiply with
 		//************************************
-		Fraction operator*(const int);
+		Fraction operator*(const T);
 
+		//************************************
+		// Method:    operator/ To divide Fraction to Integer object (F1 / 3)
+		// FullName:  Fraction::operator/
+		// Access:    public 
+		// Returns:   Fraction
+		// Qualifier:
+		// Parameter: const int Integer number
+		//************************************
+		Fraction operator/(const T);
+		
 		//************************************
 		// Method:    operator*  To multiply integer to Fraction object (3 * F1)
 		// FullName:  Fraction::operator*
 		// Access:    public 
 		// Returns:   friend Fraction
 		// Qualifier:
-		// Parameter: const int number  Integer number
+		// Parameter: const T number
 		// Parameter: const Fraction & fraction  Fraction object to multiply with
 		//************************************
-		friend Fraction operator*(const int number, const Fraction & fraction);
+		template<typename T> friend Fraction operator*(T, const Fraction &);
 
 		//************************************
 		// Method:    operator<<
@@ -180,7 +281,9 @@ class Fraction
 		// Parameter: std::ostream &
 		// Parameter: const Fraction &
 		//************************************
-		friend std::ostream & operator<<(std::ostream & os, const Fraction &);
+		template<typename T> friend std::ostream & operator<<(std::ostream &, const Fraction &);
 };
 
 #endif
+
+#include "operations/Fraction.cxx"

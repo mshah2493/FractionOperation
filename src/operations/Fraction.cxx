@@ -1,15 +1,15 @@
-#include "Fraction.h"
-
 #include <stdexcept>
 #include <cstdlib>
 
-Fraction::Fraction()
+template <class T>
+Fraction<T>::Fraction()
 {
 	numerator = 0;
 	denominator = 0;
 }
 
-Fraction::Fraction(int _numerator, int _denominator)
+template <class T>
+Fraction<T>::Fraction(T _numerator, T _denominator)
 {
 	numerator = _numerator;
 	denominator = _denominator;
@@ -18,25 +18,29 @@ Fraction::Fraction(int _numerator, int _denominator)
 	{
 		throw std::runtime_error("Divide by zero exception. Denominator cannot be zero.");
 	}
-	
+
 	isNumeratorZero();
 }
 
-Fraction::~Fraction() { }
+template <class T>
+Fraction<T>::~Fraction() { }
 
-void Fraction::setnumerator(const int _numerator)
+template <class T>
+void Fraction<T>::setnumerator(const T _numerator)
 {
 	numerator = _numerator;
 
 	isNumeratorZero();
 }
 
-long Fraction::getnumerator() const
+template <class T>
+long Fraction<T>::getnumerator() const
 {
 	return numerator;
 }
 
-void Fraction::setdenominator(const int _denominator)
+template <class T>
+void Fraction<T>::setdenominator(const T _denominator)
 {
 	denominator = _denominator;
 
@@ -48,12 +52,14 @@ void Fraction::setdenominator(const int _denominator)
 	isNumeratorZero();
 }
 
-long Fraction::getdenominator() const
+template <class T>
+long Fraction<T>::getdenominator() const
 {
 	return denominator;
 }
 
-bool Fraction::isNumeratorZero()
+template <class T>
+bool Fraction<T>::isNumeratorZero()
 {
 	if (numerator == 0)
 	{
@@ -66,46 +72,174 @@ bool Fraction::isNumeratorZero()
 	return false;
 }
 
-Fraction Fraction::operator*(const Fraction & fraction_2)
+template <class T>
+Fraction<T> Fraction<T>::operator+(const Fraction & right_fraction)
 {
-	return multiply(fraction_2);
+	return add(right_fraction);
 }
 
-Fraction Fraction::operator*(const int number)
+template <class T>
+Fraction<T> Fraction<T>::operator-(const Fraction & right_fraction)
 {
-	return multiply(number, *this);
+	return subtract(right_fraction);
 }
 
-Fraction operator*(const int number, const Fraction & fraction)
+template <class T>
+Fraction<T> Fraction<T>::operator*(const Fraction & right_fraction)
 {
-	Fraction temp_fraction;
-
-	return temp_fraction.multiply(number, fraction);
+	return multiply(right_fraction);
 }
 
-Fraction Fraction::multiply(const Fraction & fraction_2)
+template <class T>
+Fraction<T> Fraction<T>::operator/(const Fraction & right_fraction)
 {
-	Fraction fraction;
-	fraction.setnumerator(numerator * fraction_2.getnumerator());
-	fraction.setdenominator(denominator * fraction_2.getdenominator());
+	return divide(right_fraction);
+}
+
+template <class T>
+Fraction<T> Fraction<T>::operator+(const T number)
+{
+	Fraction fraction(number, 1);
+
+	return add(fraction);
+}
+
+template <class T>
+Fraction<T> Fraction<T>::operator-(const T number)
+{
+	Fraction fraction(number, 1);
+
+	return subtract(fraction);
+}
+
+template <class T>
+Fraction<T> Fraction<T>::operator*(const T number)
+{
+	Fraction fraction(number, 1);
+
+	return multiply(fraction);
+}
+
+template <class T>
+Fraction<T> Fraction<T>::operator/(const T number)
+{
+	Fraction fraction(number, 1);
+
+	return divide(fraction);
+}
+
+template <class T>
+Fraction<T> operator*(const T number, const Fraction<T> & fraction_2)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction * fraction_2;
+}
+
+template <class T>
+Fraction<T> Fraction<T>::add(const Fraction & right_fraction)
+{
+	Fraction result;
+
+	if (!isOperationOverflowed(right_fraction, 1))
+	{
+		result.setnumerator(numerator * right_fraction.getdenominator() + denominator * right_fraction.getnumerator());
+		result.setdenominator(denominator * right_fraction.getdenominator());
+	}
+	else
+	{
+		throw std::range_error("A value of the addition is smaller or bigger than the min-max values.");
+	}
+
+	simplify(result);
+
+	return result;
+}
+
+template <class T>
+Fraction<T> Fraction<T>::subtract(const Fraction & right_fraction)
+{
+	Fraction result;
+
+	if (!isOperationOverflowed(right_fraction, 1))
+	{
+		result.setnumerator(numerator * right_fraction.getdenominator() - denominator * right_fraction.getnumerator());
+		result.setdenominator(denominator * right_fraction.getdenominator());
+	}
+	else
+	{
+		throw std::range_error("A value of the subtraction is smaller or bigger than the min-max values.");
+	}
+
+	simplify(result);
+
+	return result;
+}
+
+template <class T>
+Fraction<T> Fraction<T>::multiply(const Fraction & right_fraction)
+{
+	Fraction result;
+
+	if (!isOperationOverflowed(right_fraction, 1))
+	{
+		result.setnumerator(numerator * right_fraction.getnumerator());
+		result.setdenominator(denominator * right_fraction.getdenominator());
+	}
+	else
+	{
+		throw std::range_error("A value of the multiplipcation is smaller or bigger than the min-max values.");
+	}
+
+	simplify(result);
+
+	return result;
+}
+
+template <class T>
+Fraction<T> Fraction<T>::divide(const Fraction & right_fraction)
+{
+	Fraction result;
+
+	if (!isOperationOverflowed(right_fraction, 1))
+	{
+		result.setnumerator(numerator * right_fraction.getdenominator());
+		result.setdenominator(denominator * right_fraction.getnumerator());
+	}
+	else
+	{
+		throw std::range_error("A value of the division is smaller or bigger than the min-max values.");
+	}
+
+	simplify(result);
+
+	return result;
+}
+
+/*
+template <class T>
+Fraction<T> Fraction<T>::multiply(const T & number, const Fraction & fraction_2)
+{
+	Fraction<T> fraction;
+
+	if (!isOperationOverflowed(fraction_2, number))
+	{
+		fraction.setnumerator(number * fraction_2.getnumerator());
+		fraction.setdenominator(fraction_2.getdenominator());
+	}
+	else
+	{
+		throw std::range_error("A value of the multiplipcation is smaller or bigger than the min-max values.");
+	}
 
 	simplify(fraction);
 
 	return fraction;
 }
+*/
 
-Fraction Fraction::multiply(const int & number, const Fraction & fraction_2)
-{
-	Fraction fraction;
-	fraction.setnumerator(number * fraction_2.getnumerator());
-	fraction.setdenominator(fraction_2.getdenominator());
-
-	simplify(fraction);
-
-	return fraction;
-}
-
-void Fraction::simplify(Fraction & fraction)
+template <class T>
+void Fraction<T>::simplify(Fraction & fraction)
 {
 	if (fraction.getnumerator() == 0)
 	{
@@ -127,7 +261,8 @@ void Fraction::simplify(Fraction & fraction)
 	fraction.setdenominator(den / common);
 }
 
-int Fraction::fixSign(Fraction & fraction)
+template <class T>
+T Fraction<T>::fixSign(Fraction & fraction)
 {
 	int sign = 1;
 	int num = fraction.getnumerator();
@@ -148,7 +283,8 @@ int Fraction::fixSign(Fraction & fraction)
 	return sign;
 }
 
-int Fraction::gcd(int num, int den)
+template <class T>
+T Fraction<T>::gcd(T num, T den)
 {
 	if (den == 0)
 	{
@@ -158,7 +294,14 @@ int Fraction::gcd(int num, int den)
 	return gcd(den, num % den);
 }
 
-std::ostream & operator<<(std::ostream & os, const Fraction & fraction)
+template <class T>
+bool Fraction<T>::isOperationOverflowed(const Fraction & fraction, T number)
+{
+	return false;
+}
+
+template <class T>
+std::ostream & operator<<(std::ostream & os, const Fraction<T> & fraction)
 {
 	if (fraction.getdenominator() == 1)
 	{

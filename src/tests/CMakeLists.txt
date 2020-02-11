@@ -4,7 +4,7 @@ set(test_sources
 	FractionTests.cxx
    )
 
-add_executable(FractionTests ${test_sources})
+add_executable(FractionTests FractionTests.cxx)
 
 set_target_properties(FractionTests PROPERTIES FOLDER "Tests")
 

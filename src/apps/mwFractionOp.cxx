@@ -2,17 +2,30 @@
 
 int main(int argc, char *argv[])
 {
-	Fraction fraction_1(4, -12);
-	Fraction fraction_2(4, 6);
-	
-	Fraction fraction = fraction_1 * 1;
-	std::cout << "First Resultant Fraction = " << fraction << std::endl;
+	Fraction<int> fraction_1(4, -12);
+	Fraction<int> fraction_2(4, 6);
+	Fraction<int> fraction;
 
-	fraction = fraction_2 * 2;
-	std::cout << "Second Resultant Fraction = " << fraction << std::endl;
+	fraction = fraction_1 + fraction_2;
+	std::cout << "F1 + F2 = " << fraction << std::endl;
+
+	fraction = fraction_1 + 1;
+	std::cout << "F + NUMBER = " << fraction << std::endl;
+
+	fraction = fraction_1 - fraction_2;
+	std::cout << "F1 - F2 = " << fraction << std::endl;
+
+	fraction = fraction_1 * 10;
+	std::cout << "F1 * NUMBER = " << fraction << std::endl;
 
 	fraction = fraction_1 * fraction_2;
-	std::cout << "Third Resultant Fraction = " << fraction << std::endl;
+	std::cout << "F1 * F2 = " << fraction << std::endl;
+
+	fraction = 10 * fraction_2;
+	std::cout << "NUMBER * F2 = " << fraction << std::endl;
+
+	fraction = fraction_1 / fraction_2;
+	std::cout << "F1 / F2 = " << fraction << std::endl;
 
 	try
 	{
@@ -25,7 +38,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	Fraction fraction_4;
+	Fraction<int> fraction_4;
 
 	try
 	{
