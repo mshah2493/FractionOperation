@@ -99,6 +99,18 @@ TEST_F(FractionGTests, Test_F1_Add_Number)
 	ASSERT_EQ(resultant_den, expected_den);
 }
 
+TEST_F(FractionGTests, Test_Number_Add_F1)
+{
+	Fraction<int> fraction = 1 + *fraction_1.get();
+	int resultant_num = fraction.getnumerator();
+	int resultant_den = fraction.getdenominator();
+	int expected_num = 3;
+	int expected_den = 2;
+
+	ASSERT_EQ(resultant_num, expected_num);
+	ASSERT_EQ(resultant_den, expected_den);
+}
+
 TEST_F(FractionGTests, Test_F1_Subtract_F2)
 {
 	Fraction<int> fraction = *fraction_1.get() - *fraction_2.get();
@@ -117,6 +129,18 @@ TEST_F(FractionGTests, Test_F1_Subtract_Number)
 	int resultant_num = fraction.getnumerator();
 	int resultant_den = fraction.getdenominator();
 	int expected_num = -1;
+	int expected_den = 2;
+
+	ASSERT_EQ(resultant_num, expected_num);
+	ASSERT_EQ(resultant_den, expected_den);
+}
+
+TEST_F(FractionGTests, Test_Number_Subtract_F1)
+{
+	Fraction<int> fraction = 1 - *fraction_1.get();
+	int resultant_num = fraction.getnumerator();
+	int resultant_den = fraction.getdenominator();
+	int expected_num = 1;
 	int expected_den = 2;
 
 	ASSERT_EQ(resultant_num, expected_num);
@@ -183,6 +207,18 @@ TEST_F(FractionGTests, Test_F1_Divide_Number)
 	ASSERT_EQ(resultant_den, expected_den);
 }
 
+TEST_F(FractionGTests, Test_Number_Divide_F1)
+{
+	Fraction<int> fraction = 1 / *fraction_1.get();
+	int resultant_num = fraction.getnumerator();
+	int resultant_den = fraction.getdenominator();
+	int expected_num = 2;
+	int expected_den = 1;
+
+	ASSERT_EQ(resultant_num, expected_num);
+	ASSERT_EQ(resultant_den, expected_den);
+}
+
 TEST_F(FractionGTests, Test_F1_Equals_F2)
 {
 	fraction_2->setnumerator(1);
@@ -195,6 +231,11 @@ TEST_F(FractionGTests, Test_F1_Equals_Number)
 	ASSERT_FALSE(*fraction_1.get() == 3);
 }
 
+TEST_F(FractionGTests, Test_Number_Equals_F1)
+{
+	ASSERT_FALSE(3 == *fraction_1.get());
+}
+
 TEST_F(FractionGTests, Test_F1_NotEquals_F2)
 {
 	ASSERT_TRUE(*fraction_1.get() != *fraction_2.get());
@@ -203,6 +244,11 @@ TEST_F(FractionGTests, Test_F1_NotEquals_F2)
 TEST_F(FractionGTests, Test_F1_NotEquals_Number)
 {
 	ASSERT_TRUE(*fraction_1.get() != 3);
+}
+
+TEST_F(FractionGTests, Test_Number_NotEquals_F1)
+{
+	ASSERT_TRUE(3 != *fraction_1.get());
 }
 
 TEST_F(FractionGTests, Test_F1_LT_F2)
@@ -215,6 +261,11 @@ TEST_F(FractionGTests, Test_F1_LT_Number)
 	ASSERT_TRUE(*fraction_1.get() < 3);
 }
 
+TEST_F(FractionGTests, Test_Number_LT_F1)
+{
+	ASSERT_FALSE(3 < *fraction_1.get());
+}
+
 TEST_F(FractionGTests, Test_F1_GT_F2)
 {
 	ASSERT_FALSE(*fraction_1.get() > *fraction_2.get());
@@ -223,6 +274,11 @@ TEST_F(FractionGTests, Test_F1_GT_F2)
 TEST_F(FractionGTests, Test_F1_GT_Number)
 {
 	ASSERT_FALSE(*fraction_1.get() > 3);
+}
+
+TEST_F(FractionGTests, Test_Number_GT_F1)
+{
+	ASSERT_TRUE(3 > *fraction_1.get());
 }
 
 TEST_F(FractionGTests, Test_F1_GTE_F2)
@@ -235,6 +291,11 @@ TEST_F(FractionGTests, Test_F1_GTE_Number)
 	ASSERT_FALSE(*fraction_1.get() >= 3);
 }
 
+TEST_F(FractionGTests, Test_Number_GTE_F1)
+{
+	ASSERT_TRUE(3 >= *fraction_1.get());
+}
+
 TEST_F(FractionGTests, Test_F1_LTE_F2)
 {
 	ASSERT_TRUE(*fraction_1.get() <= *fraction_2.get());
@@ -243,6 +304,11 @@ TEST_F(FractionGTests, Test_F1_LTE_F2)
 TEST_F(FractionGTests, Test_F1_LTE_Number)
 {
 	ASSERT_TRUE(*fraction_1.get() <= 3);
+}
+
+TEST_F(FractionGTests, Test_Number_LTE_F1)
+{
+	ASSERT_FALSE(3 <= *fraction_1.get());
 }
 
 int main(int argc, char **argv)

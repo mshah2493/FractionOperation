@@ -70,25 +70,25 @@ bool Fraction<T>::isNumeratorZero()
 }
 
 template <class T>
-Fraction<T> Fraction<T>::operator+(const Fraction & right_fraction)
+Fraction<T> Fraction<T>::operator+(const Fraction<T> & right_fraction)
 {
 	return add(right_fraction);
 }
 
 template <class T>
-Fraction<T> Fraction<T>::operator-(const Fraction & right_fraction)
+Fraction<T> Fraction<T>::operator-(const Fraction<T> & right_fraction)
 {
 	return subtract(right_fraction);
 }
 
 template <class T>
-Fraction<T> Fraction<T>::operator*(const Fraction & right_fraction)
+Fraction<T> Fraction<T>::operator*(const Fraction<T> & right_fraction)
 {
 	return multiply(right_fraction);
 }
 
 template <class T>
-Fraction<T> Fraction<T>::operator/(const Fraction & right_fraction)
+Fraction<T> Fraction<T>::operator/(const Fraction<T> & right_fraction)
 {
 	return divide(right_fraction);
 }
@@ -210,11 +210,83 @@ bool Fraction<T>::operator<=(const T number)
 }
 
 template <class T>
-Fraction<T> operator*(const T number, const Fraction<T> & fraction_2)
+Fraction<T> operator+(const T number, const Fraction<T> & right_fraction)
 {
 	Fraction<T> fraction(number, 1);
 
-	return fraction * fraction_2;
+	return fraction + right_fraction;
+}
+
+template <class T>
+Fraction<T> operator-(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction - right_fraction;
+}
+
+template <class T>
+Fraction<T> operator*(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction * right_fraction;
+}
+
+template <class T>
+Fraction<T> operator/(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction / right_fraction;
+}
+
+template <class T>
+bool operator==(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction == right_fraction;
+}
+
+template <class T>
+bool operator!=(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction != right_fraction;
+}
+
+template <class T>
+bool operator<(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction < right_fraction;
+}
+
+template <class T>
+bool operator>(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction > right_fraction;
+}
+
+template <class T>
+bool operator<=(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction <= right_fraction;
+}
+
+template <class T>
+bool operator>=(const T number, const Fraction<T> & right_fraction)
+{
+	Fraction<T> fraction(number, 1);
+
+	return fraction >= right_fraction;
 }
 
 template <class T>
