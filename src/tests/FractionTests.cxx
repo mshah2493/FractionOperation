@@ -57,6 +57,34 @@ TEST_F(FractionGTests, Test_setdenominator_Throw)
 	}
 }
 
+TEST_F(FractionGTests, Test_Overflow_Throw)
+{
+	
+	fraction_1->setnumerator(INT_MAX);
+	fraction_1->setdenominator(1);
+	fraction_2->setnumerator(INT_MAX);
+	fraction_2->setdenominator(1);
+
+	EXPECT_THROW(*fraction_1.get() * *fraction_2.get(), std::range_error);
+}
+
+TEST_F(FractionGTests, Test_Overflow_Throw_Message)
+{
+	try
+	{
+		fraction_1->setnumerator(INT_MAX);
+		fraction_1->setdenominator(1);
+		fraction_2->setnumerator(INT_MAX);
+		fraction_2->setdenominator(1);
+
+		*fraction_1.get() * *fraction_2.get();
+	}
+	catch (const std::range_error & err)
+	{
+		EXPECT_EQ(err.what(), std::string("A value of the multiplipcation is smaller or bigger than the min-max values."));
+	}
+}
+
 TEST_F(FractionGTests, Test_getnumerator)
 {	
 	int expected_num_1 = 1;

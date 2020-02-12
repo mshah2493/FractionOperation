@@ -1,14 +1,11 @@
 template <class T>
 Fraction<T> Fraction<T>::add(const Fraction & right_fraction)
 {
-	Fraction result;
+	T n = numerator * right_fraction.getdenominator() + denominator * right_fraction.getnumerator();
+	T d = denominator * right_fraction.getdenominator();
+	Fraction<T> result(n, d);
 
-	if (!isOperationOverflowed(right_fraction, 1))
-	{
-		result.setnumerator(numerator * right_fraction.getdenominator() + denominator * right_fraction.getnumerator());
-		result.setdenominator(denominator * right_fraction.getdenominator());
-	}
-	else
+	if (!isBoundriesOkay(result, right_fraction, Add))
 	{
 		throw std::range_error("A value of the addition is smaller or bigger than the min-max values.");
 	}
@@ -21,14 +18,11 @@ Fraction<T> Fraction<T>::add(const Fraction & right_fraction)
 template <class T>
 Fraction<T> Fraction<T>::subtract(const Fraction & right_fraction)
 {
-	Fraction result;
+	T n = numerator * right_fraction.getdenominator() - denominator * right_fraction.getnumerator();
+	T d = denominator * right_fraction.getdenominator();
+	Fraction<T> result(n, d);
 
-	if (!isOperationOverflowed(right_fraction, 1))
-	{
-		result.setnumerator(numerator * right_fraction.getdenominator() - denominator * right_fraction.getnumerator());
-		result.setdenominator(denominator * right_fraction.getdenominator());
-	}
-	else
+	if (!isBoundriesOkay(result, right_fraction, Subtract))
 	{
 		throw std::range_error("A value of the subtraction is smaller or bigger than the min-max values.");
 	}
@@ -41,14 +35,11 @@ Fraction<T> Fraction<T>::subtract(const Fraction & right_fraction)
 template <class T>
 Fraction<T> Fraction<T>::multiply(const Fraction & right_fraction)
 {
-	Fraction result;
+	T n = numerator * right_fraction.getnumerator();
+	T d = denominator * right_fraction.getdenominator();
+	Fraction<T> result(n, d);
 
-	if (!isOperationOverflowed(right_fraction, 1))
-	{
-		result.setnumerator(numerator * right_fraction.getnumerator());
-		result.setdenominator(denominator * right_fraction.getdenominator());
-	}
-	else
+	if (!isBoundriesOkay(result, right_fraction, Multiply))
 	{
 		throw std::range_error("A value of the multiplipcation is smaller or bigger than the min-max values.");
 	}
@@ -61,14 +52,11 @@ Fraction<T> Fraction<T>::multiply(const Fraction & right_fraction)
 template <class T>
 Fraction<T> Fraction<T>::divide(const Fraction & right_fraction)
 {
-	Fraction result;
+	T n = numerator * right_fraction.getdenominator();
+	T d = denominator * right_fraction.getnumerator();
+	Fraction<T> result(n, d);
 
-	if (!isOperationOverflowed(right_fraction, 1))
-	{
-		result.setnumerator(numerator * right_fraction.getdenominator());
-		result.setdenominator(denominator * right_fraction.getnumerator());
-	}
-	else
+	if (!isBoundriesOkay(result, right_fraction, Divide))
 	{
 		throw std::range_error("A value of the division is smaller or bigger than the min-max values.");
 	}
@@ -109,6 +97,8 @@ bool Fraction<T>::equals(const Fraction & right_fraction, const OpEnum & op)
 		case LessThanAndEqualsTo:
 			if ((numerator / denominator) <= (right_fraction.numerator / right_fraction.denominator))
 				result = true;
+			break;
+		default:
 			break;
 	}
 
@@ -172,7 +162,50 @@ T Fraction<T>::gcd(T num, T den)
 }
 
 template <class T>
-bool Fraction<T>::isOperationOverflowed(const Fraction & fraction, T number)
+bool Fraction<T>::isBoundriesOkay(const Fraction & result, const Fraction & right_fraction, const OpEnum & op)
 {
-	return false;
+	bool isOkay = true;
+
+	switch (op)
+	{
+		case Add:
+			if (result.getnumerator() - numerator * right_fraction.getdenominator() != denominator * right_fraction.getnumerator()
+				||
+				result.getdenominator() / denominator != right_fraction.getdenominator()
+				)
+			{
+				isOkay = false;
+			}
+			break;
+		case Subtract:
+			if ((result.getnumerator() + denominator * right_fraction.getnumerator()) != (numerator * right_fraction.getdenominator())
+				||
+				result.getdenominator() / denominator != right_fraction.getdenominator()
+				)
+			{
+				isOkay = false;
+			}
+			break;
+		case Multiply:
+			if (result.getnumerator() / numerator != right_fraction.getnumerator()
+				||
+				result.getdenominator() / denominator != right_fraction.getdenominator())
+			{
+				isOkay = false;
+			}
+			break;
+		case Divide:
+			if (result.getnumerator() / numerator != right_fraction.getdenominator()
+				|| 
+				result.getdenominator() / denominator!= right_fraction.getnumerator()
+				)
+			{
+				isOkay = false;
+			}
+			break;
+		default:
+			break;
+	}
+
+	return isOkay;
 }

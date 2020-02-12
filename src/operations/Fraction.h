@@ -14,6 +14,10 @@ class Fraction
 
 		const enum OpEnum
 		{
+			Add,
+			Subtract,
+			Divide,
+			Multiply,
 			EqualsTo,
 			NotEqualsTo,
 			GreaterThan,
@@ -114,14 +118,14 @@ class Fraction
 		bool isNumeratorZero();
 
 		//************************************
-		// Method:    isOperationOverflowed - Checks if an operation (addition/multiplication/subtraction/division) is overflowed. 
-		// FullName:  Fraction::isOperationOverflowed
+		// Method:    isBoundriesOkay - Checks if an operation (addition/multiplication/subtraction/division) is overflowed. 
+		// FullName:  Fraction::isBoundriesOkay
 		// Access:    private 
 		// Returns:   bool
 		// Qualifier:
 		// Parameter: Fraction
 		//************************************
-		bool isOperationOverflowed(const Fraction &, T);
+		bool isBoundriesOkay(const Fraction &, const Fraction &, const OpEnum &);
 
 	public:
 		
