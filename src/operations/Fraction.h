@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <stdexcept>
+#include <cstdlib>
 
 #ifndef FRACTION_H
 #define FRACTION_H
@@ -9,7 +11,17 @@ class Fraction
 {
 	private:
 		T numerator, denominator;
-	
+
+		static const enum OpEnum 
+		{
+			EqualsTo,
+			NotEqualsTo,
+			GreaterThan,
+			LessThan,
+			GreaterThanAndEqualsTo,
+			LessThanAndEqualsTo
+		};
+
 		//************************************
 		// Method:    add - add two objects F1+F2
 		// FullName:  Fraction::add
@@ -51,15 +63,14 @@ class Fraction
 		Fraction divide(const Fraction &);
 
 		//************************************
-		// Method:    multiply - Multiply integer and an object 3 * F1 | F1 * 3
-		// FullName:  Fraction::multiply
+		// Method:    equals - compare two fraction objects
+		// FullName:  Fraction::equals
 		// Access:    private 
-		// Returns:   Fraction
+		// Returns:   bool
 		// Qualifier:
-		// Parameter: const T &
 		// Parameter: const Fraction &
 		//************************************
-		Fraction multiply(const T &, const Fraction &);
+		bool equals(const Fraction &, const OpEnum &);
 		
 		//************************************
 		// Method:    simplify - To simplify fraction (2/4 = 1/2)
@@ -260,6 +271,126 @@ class Fraction
 		// Parameter: const int Integer number
 		//************************************
 		Fraction operator/(const T);
+
+		//************************************
+		// Method:    operator==  To compare Fraction objects (F1 == F2)
+		// FullName:  Fraction::operator==
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator==(const Fraction &);
+
+		//************************************
+		// Method:    operator==  To compare Fraction object to a number (3 == F1)
+		// FullName:  Fraction::operator==
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator==(const T);
+
+		//************************************
+		// Method:    operator!= (F1 != F2)
+		// FullName:  Fraction::operator!=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator!=(const Fraction &);
+
+		//************************************
+		// Method:    operator!=  (3 != F1)
+		// FullName:  Fraction::operator!=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator!=(const T);
+
+		//************************************
+		// Method:    operator> (F1 > F2)
+		// FullName:  Fraction::operator>
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator>(const Fraction&);
+
+		//************************************
+		// Method:    operator> (3 > F1)
+		// FullName:  Fraction::operator>
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator>(const T);
+
+		//************************************
+		// Method:    operator< (F1 < F2)
+		// FullName:  Fraction::operator<
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator<(const Fraction &);
+
+		//************************************
+		// Method:    operator< (3 < F1)
+		// FullName:  Fraction::operator<
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator<(const T);
+
+		//************************************
+		// Method:    operator>= (F1 >= F2)
+		// FullName:  Fraction::operator>=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator>=(const Fraction&);
+
+		//************************************
+		// Method:    operator>= (3 >= F1)
+		// FullName:  Fraction::operator>=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator>=(const T);
+
+		//************************************
+		// Method:    operator<= (3 <= F1)
+		// FullName:  Fraction::operator<=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const Fraction &
+		//************************************
+		bool operator<=(const Fraction&);
+
+		//************************************
+		// Method:    operator<= (3 <= F1)
+		// FullName:  Fraction::operator<=
+		// Access:    public 
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: const T number
+		//************************************
+		bool operator<=(const T);
 		
 		//************************************
 		// Method:    operator*  To multiply integer to Fraction object (3 * F1)
@@ -268,7 +399,6 @@ class Fraction
 		// Returns:   friend Fraction
 		// Qualifier:
 		// Parameter: const T number
-		// Parameter: const Fraction & fraction  Fraction object to multiply with
 		//************************************
 		template<typename T> friend Fraction operator*(T, const Fraction &);
 
@@ -287,3 +417,4 @@ class Fraction
 #endif
 
 #include "operations/Fraction.cxx"
+#include "operations/Operators-impl.cxx"

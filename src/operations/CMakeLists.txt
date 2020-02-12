@@ -1,5 +1,6 @@
 set(op_sources
     Fraction.cxx
+	Operators-impl.cxx
     )
 
 set(op_headers

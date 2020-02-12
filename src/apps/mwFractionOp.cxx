@@ -4,6 +4,8 @@ int main(int argc, char *argv[])
 {
 	Fraction<int> fraction_1(4, -12);
 	Fraction<int> fraction_2(4, 6);
+	Fraction<int> fraction_3(4, -12);
+	Fraction<int> fraction_4(4, 7);
 	Fraction<int> fraction;
 
 	fraction = fraction_1 + fraction_2;
@@ -27,9 +29,25 @@ int main(int argc, char *argv[])
 	fraction = fraction_1 / fraction_2;
 	std::cout << "F1 / F2 = " << fraction << std::endl;
 
+	std::cout << "F1 == F3 = " << (fraction_1 == fraction_3) << std::endl;
+
+	std::cout << "F1 != F3 = " << (fraction_1 != fraction_3) << std::endl;
+
+	std::cout << "F2 == F4 = " << (fraction_2 == fraction_4) << std::endl;
+
+	std::cout << "F2 != F4 = " << (fraction_2 != fraction_4) << std::endl;
+
+	std::cout << "F1 > F3 = " << (fraction_1 > fraction_3) << std::endl;
+
+	std::cout << "F1 < F3 = " << (fraction_1 < fraction_3) << std::endl;
+
+	std::cout << "F2 >= F4 = " << (fraction_2 >= fraction_4) << std::endl;
+
+	std::cout << "F2 <= F4 = " << (fraction_2 <= fraction_4) << std::endl;
+
 	try
 	{
-		Fraction fraction_3(4, 0);
+		Fraction f(4, 0);
 	}
 	catch (std::runtime_error & e)
 	{
@@ -38,11 +56,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	Fraction<int> fraction_4;
-
 	try
 	{
-		fraction_4.setdenominator(0);
+		fraction_1.setdenominator(0);
 	}
 	catch (std::runtime_error & e)
 	{
